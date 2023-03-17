@@ -8,9 +8,10 @@ use App\Models\Products;
 
 class ProductController extends Controller
 {
-    public function index($group = 0) {
+    public function index() {
 
-        $groups = Groups::where('id_parent', $group)->get();
+        $id_group = (\request('group')) ? \request('group') : 0;
+        $groups = Groups::where('id_parent', $id_group)->get();
         $products = Products::all();
 
         return view('index', [

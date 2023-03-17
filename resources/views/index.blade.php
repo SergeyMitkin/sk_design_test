@@ -14,7 +14,7 @@
 
                 <ul>
                     @foreach($groups as $group)
-                        <li><a href="#">{{ $group->name }}</a><span>count</span></li>
+                        <li><a href="/?group={{ $group->id }}">{{ $group->name }}</a><span>count</span></li>
                     @endforeach
                 </ul>
             </div>
