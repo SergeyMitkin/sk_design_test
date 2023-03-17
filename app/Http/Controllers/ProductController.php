@@ -8,17 +8,14 @@ use App\Models\Products;
 
 class ProductController extends Controller
 {
-    public function index() {
+    public function index($group = 0) {
 
-        $groups = Groups::all();
+        $groups = Groups::where('id_parent', $group)->get();
         $products = Products::all();
-
-//        $products['tv'] = ['Телевизор 1', 'Телевизор 2', 'Телевизор 3'];
-//        $products['dvd'] = ['DVD 1', 'DVD 2', 'DVD 3'];
 
         return view('index', [
             'groups' => $groups,
-            'dvd' => ['DVD 1', 'DVD 2', 'DVD 3']
+            'products' => $products
         ]);
     }
 }

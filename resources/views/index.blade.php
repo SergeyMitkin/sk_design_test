@@ -10,20 +10,19 @@
     <body>
         <div class="wrapper">
             <div class="groups">
-
                 <a href="/">Все товары</a>
 
                 <ul>
-                @foreach($groups as $group)
-                    <li>
-                        <a href="#">{{ $group->name }}</a> <span>count</span>
-                    </li>
-                @endforeach
+                    @foreach($groups as $group)
+                        <li><a href="#">{{ $group->name }}</a><span>count</span></li>
+                    @endforeach
                 </ul>
             </div>
 
             <div class="products">
-                products
+                @foreach($products as $product)
+                    <div>{{ $product->name }}</div>
+                @endforeach
             </div>
         </div>
     </body>
