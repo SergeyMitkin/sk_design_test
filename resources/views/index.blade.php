@@ -14,9 +14,9 @@
                 <a href="/">Все товары</a>
 
                 <ul>
-                @foreach($tv as $item)
+                @foreach($groups as $group)
                     <li>
-                        <a href="#">{{ $item }}</a> <span>count</span>
+                        <a href="#">{{ $group->name }}</a> <span>count</span>
                     </li>
                 @endforeach
                 </ul>
