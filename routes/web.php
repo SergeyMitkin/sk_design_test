@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('products', [
+        'tv' => ['Телевизор 1', 'Телевизор 2', 'Телевизор 3'],
+        'dvd' => ['DVD 1', 'DVD 2', 'DVD 3']]);
 });

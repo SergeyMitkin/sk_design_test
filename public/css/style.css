@@ -1,0 +1,14 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.groups {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    padding: 10px;
+}
+.products {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    padding: 10px;
+}
