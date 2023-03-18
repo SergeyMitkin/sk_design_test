@@ -15,13 +15,16 @@
                 <ul>
                     @foreach($groups as $group)
                         <li><a href="/?group={{ $group->id }}">{{ $group->name }}</a><span>count</span></li>
+                        @foreach($group->subgroups as $subgroup)
+                            @include('subgroup', ['subgroup' => $subgroup])
+                        @endforeach
                     @endforeach
                 </ul>
             </div>
 
             <div class="products">
                 @foreach($products as $product)
-                    <div>{{ $product->name }}</div>
+                    <div>{{ $product->group->name }}</div>
                 @endforeach
             </div>
         </div>

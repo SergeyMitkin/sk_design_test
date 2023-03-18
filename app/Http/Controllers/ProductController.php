@@ -11,15 +11,12 @@ class ProductController extends Controller
     public function index() {
 
         $id_group = (\request('group')) ? \request('group') : 0;
-        $groups = Groups::where('id_parent', $id_group)->get();
-        $products = Products::all();
+//        $groups = Groups::where('id_parent', $id_group)->get();
+        $groups = Groups::where('id_parent', 0)
+            ->with('subgroups')
+            ->get();
 
-        // --- ОТЛАДКА НАЧАЛО
-        echo '<pre>';
-        var_dump(Products::getGroupProducts($id_group));
-        echo'</pre>';
-        die;
-        // --- Отладка конец
+        $products = Products::all();
 
         return view('index', [
             'groups' => $groups,
