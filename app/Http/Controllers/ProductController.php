@@ -12,13 +12,11 @@ class ProductController extends Controller
 
         $id_group = (\request('group')) ? \request('group') : 0;
 //        $groups = Groups::where('id_parent', $id_group)->get();
-        $groups = Groups::where('id_parent', $id_group)
-            ->with('products')
-            ->get();
+        $groups = Groups::where('id_parent', $id_group)->withCount('products')->get();
 
         $products = Products::all();
-
-        $groups_model = new Groups();
+//
+//        $groups_model = new Groups();
 //        $groups_model->groupProductsCount();
 
         return view('index', [
