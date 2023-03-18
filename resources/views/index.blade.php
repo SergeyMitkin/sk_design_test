@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+{{--<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">--}}
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,17 +14,19 @@
 
                 <ul>
                     @foreach($groups as $group)
-                        <li><a href="/?group={{ $group->id }}">{{ $group->name }}</a>
+                        <li>
+                            <a href="/?group={{ $group->id }}">{{ $group->name }}</a>
+                            <span>{{ $group->groupProductsCount() }}</span>
 
-                            <span>
-                                count {{ $group->products_count }}
-                                {{ $group->groupProductsCount() }}
-                            </span>
-
+{{--                        @if(\request('group') && \request('group') > 0)--}}
+                        @if ($group->children)
+                            <ul>
+                                @foreach($group->children as $subgroup)
+                                    @include('subgroup', ['subgroup' => $subgroup])
+                                @endforeach
+                            </ul>
+                        @endif
                         </li>
-{{--                        @foreach($group->groups as $subgroup)--}}
-{{--                            @include('subgroup', ['subgroup' => $subgroup])--}}
-{{--                        @endforeach--}}
                     @endforeach
                 </ul>
             </div>

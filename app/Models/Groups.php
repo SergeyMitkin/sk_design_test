@@ -14,14 +14,9 @@ class Groups extends Model
         return $this->hasMany(Products::class, 'id_group');
     }
 
-    public function groups()
+    public function children()
     {
         return $this->hasMany(Groups::class, 'id_parent');
-    }
-
-    public function subgroups()
-    {
-        return $this->hasMany(Groups::class, 'id_parent')->with('groups');
     }
 
     public function groupProductsCount()
