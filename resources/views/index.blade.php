@@ -14,10 +14,10 @@
 
                 <ul>
                     @foreach($groups as $group)
-                        <li><a href="/?group={{ $group->id }}">{{ $group->name }}</a><span>count</span></li>
-                        @foreach($group->subgroups as $subgroup)
-                            @include('subgroup', ['subgroup' => $subgroup])
-                        @endforeach
+                        <li><a href="/?group={{ $group->id }}">{{ $group->name }}</a> <span>count {{ $group->products->count() }} </span></li>
+{{--                        @foreach($group->groups as $subgroup)--}}
+{{--                            @include('subgroup', ['subgroup' => $subgroup])--}}
+{{--                        @endforeach--}}
                     @endforeach
                 </ul>
             </div>
