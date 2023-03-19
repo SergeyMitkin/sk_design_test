@@ -11,10 +11,9 @@ class ProductController extends Controller
     public function index() {
 
         $id_group = (\request('group')) ? \request('group') : 0;
-        $groups = Groups::where('id_parent', $id_group)
-//            ->with('children')
+        $groups = Groups::where('id_parent', 0)
+            ->with('children')
             ->get();
-//        $groups = Groups::all();
 
         $products = Products::all();
 

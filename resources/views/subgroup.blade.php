@@ -4,7 +4,9 @@
     @if ($subgroup->children)
         <ul>
             @foreach ($subgroup->children as $subgroup)
-                @include('subgroup', ['subgroup' => $subgroup])
+                @if($subgroup->id == $id_group || $subgroup->id_parent == $id_group || array_search($id_group, $subgroup->groupIds()) !== false)
+                    @include('subgroup', ['subgroup' => $subgroup])
+                @endif
             @endforeach
         </ul>
     @endif

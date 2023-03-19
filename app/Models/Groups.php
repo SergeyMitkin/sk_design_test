@@ -24,15 +24,16 @@ class Groups extends Model
         // Найти id всех подкатегорий
         $groupIds = [];
         $groupIds[] = $this->id;
-        $childrenIds = $this->groupIds($this->id);
+        $childrenIds = $this->groupIds();
         $groupIds = array_merge($groupIds, $childrenIds);
 
         $productsCount = Products::query()->whereIn('id_group', $groupIds)->get()->count();
         return $productsCount;
     }
 
-    private function groupIds($group_id, $groupIds = [])
+    public function groupIds($group_id = false, $groupIds = [])
     {
+        $group_id = ($group_id) ? $group_id : $this->id;
         $sql_result = $this->select('id')
             ->where('id_parent', $group_id)
             ->get();

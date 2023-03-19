@@ -11,18 +11,17 @@
         <div class="wrapper">
             <div class="groups">
                 <a href="/">Все товары</a>
-
                 <ul>
                     @foreach($groups as $group)
                         <li>
                             <a href="/?group={{ $group->id }}">{{ $group->name }}</a>
                             <span>{{ $group->groupProductsCount() }}</span>
-
-{{--                        @if(\request('group') && \request('group') > 0)--}}
                         @if ($group->children)
                             <ul>
                                 @foreach($group->children as $subgroup)
-                                    @include('subgroup', ['subgroup' => $subgroup])
+                                    @if($subgroup->id == $id_group || $subgroup->id_parent == $id_group || array_search($id_group, $subgroup->groupIds()) !== false)
+                                        @include('subgroup', ['subgroup' => $subgroup])
+                                    @endif
                                 @endforeach
                             </ul>
                         @endif
