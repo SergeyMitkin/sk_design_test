@@ -13,18 +13,34 @@
                 <a href="/">Все товары</a>
                 <ul>
                     @foreach($groups as $group)
+
                         <li>
                             <a href="/?group={{ $group->id }}">{{ $group->name }}</a>
                             <span>{{ $group->groupProductsCount() }}</span>
-                        @if ($group->children)
-                            <ul>
-                                @foreach($group->children as $subgroup)
-                                    @if($subgroup->id == $id_group || $subgroup->id_parent == $id_group || array_search($id_group, $subgroup->groupIds()) !== false)
-                                        @include('subgroup', ['subgroup' => $subgroup])
-                                    @endif
-                                @endforeach
-                            </ul>
-                        @endif
+
+                            @if ($group->children)
+                                <ul>
+                                    @foreach($group->children as $subgroup)
+{{--                                        @if($subgroup->id_parent === $id_parent)--}}
+{{--                                            @include('subgroup', ['subgroup' => $subgroup])--}}
+{{--                                        @endif--}}
+
+{{--                                        @if($subgroup->id == $id_group || $subgroup->id_parent == $id_group || array_search($id_group, $subgroup->groupIds()) !== false)--}}
+
+                                        @if(
+                                            $subgroup->id == $id_group
+                                            || $subgroup->id_parent == $id_group
+                                            || array_search($id_group, $subgroup->groupIds()) !== false
+                                            /*|| $subgroup->id_parent == $id_parent*/
+                                            || array_search($subgroup->id, $parentSiblings) !== false
+
+                                            )
+                                            @include('subgroup', ['subgroup' => $subgroup])
+                                        @endif
+
+                                    @endforeach
+                                </ul>
+                            @endif
                         </li>
                     @endforeach
                 </ul>
