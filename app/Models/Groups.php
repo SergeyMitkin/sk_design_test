@@ -46,47 +46,47 @@ class Groups extends Model
         // --- Отладка конец
     }
 
-    public function groupProductsCount()
+    public function groupProducts()
     {
         // Найти id всех подкатегорий
         $groupIds = [];
         $groupIds[] = $this->id;
-        $childrenIds = $this->groupIds();
+        $childrenIds = $this->childrenIds();
         $groupIds = array_merge($groupIds, $childrenIds);
 
-        $productsCount = Products::query()->whereIn('id_group', $groupIds)->get()->count();
-        return $productsCount;
+        $products = Products::query()->whereIn('id_group', $groupIds)->get();
+        return $products;
     }
 
     /**
-     * Массив с id предков группы
+     * Массив с id всех потомков группы
      * @param $group_id
      * @param $groupIds
      * @return array|mixed
      */
-    public function groupIds($group_id = false, $groupIds = [])
+    public function childrenIds($id_group = false, $childrenIds = [])
     {
-        $group_id = ($group_id) ? $group_id : $this->id;
+        $id_group = ($id_group) ? $id_group : $this->id;
         $sql_result = $this->select('id')
-            ->where('id_parent', $group_id)
+            ->where('id_parent', $id_group)
             ->get();
 
         foreach ($sql_result as $item) {
-            $groupIds[] = $item->id;
+            $childrenIds[] = $item->id;
 
             $item_result = $this->select('id')
                 ->where('id_parent', $item->id)
                 ->get();
 
             if ($item_result->count() > 0) {
-                $groupIds = $this->groupIds($item->id, $groupIds);
+                $childrenIds = $this->childrenIds($item->id, $childrenIds);
             }
         }
 
-        return $groupIds;
+        return $childrenIds;
     }
 
-        public function parentSiblings($id_group = false, $siblingIds = []) {
+    public function siblingsIds($id_group = false, $siblingIds = []) {
 
         $id_group = ($id_group) ? $id_group : $this->id;
 
@@ -116,7 +116,7 @@ class Groups extends Model
                     ->get();
                 $siblingIds = array_merge($siblingIds, $sql_grandparent_child->pluck('id')->toArray());
 
-                $siblingIds = $this->parentSiblings($grandparent[0]->id_parent, $siblingIds);
+                $siblingIds = $this->siblingsIds($grandparent[0]->id_parent, $siblingIds);
             }
         }
 

@@ -18,21 +18,14 @@ class ProductController extends Controller
             ->with('children')
             ->get();
 
-        $parentSeblings = $groups_model->parentSiblings($id_group);
-
-        // --- ОТЛАДКА НАЧАЛО
-//        echo '<pre>';
-//        var_dump($parentSeblings);
-//        echo'</pre>';
-//        die;
-        // --- Отладка конец
+        $siblingsIds = $groups_model->siblingsIds($id_group);
 
         $products = Products::all();
 
         return view('index', [
             'id_group' => $id_group,
             'id_parent' => $id_parent,
-            'parentSiblings' => $parentSeblings,
+            'siblingsIds' => $siblingsIds,
             'groups' => $groups,
             'products' => $products
         ]);
