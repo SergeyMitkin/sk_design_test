@@ -19,39 +19,15 @@ class Groups extends Model
         return $this->hasMany(Groups::class, 'id_parent');
     }
 
-    public function parent()
+    public function groupProducts($id_group = false)
     {
-        return $this->hasOne(Groups::class, 'id', 'id_parent');
-    }
+        $id_group = ($id_group !== false) ? $id_group : $this->id;
 
-    public function idParentById($group_id)
-    {
-        $sql_result = $this->select('id_parent')
-            ->where('id', $group_id)
-            ->sole()
-        ;
-
-        return $sql_result->id_parent;
-    }
-
-    public function siblingsBefore($index)
-    {
-
-        return 'before';
-        // --- ОТЛАДКА НАЧАЛО
-//        echo '<pre>';
-//        var_dump($this->parent->children[0]->id);
-//        echo'</pre>';
-//        die;
-        // --- Отладка конец
-    }
-
-    public function groupProducts()
-    {
         // Найти id всех подкатегорий
         $groupIds = [];
-        $groupIds[] = $this->id;
-        $childrenIds = $this->childrenIds();
+        $groupIds[] = $id_group;
+        $childrenIds = $this->childrenIds($id_group);
+
         $groupIds = array_merge($groupIds, $childrenIds);
 
         $products = Products::query()->whereIn('id_group', $groupIds)->get();
@@ -66,7 +42,7 @@ class Groups extends Model
      */
     public function childrenIds($id_group = false, $childrenIds = [])
     {
-        $id_group = ($id_group) ? $id_group : $this->id;
+        $id_group = ($id_group !== false) ? $id_group : $this->id;
         $sql_result = $this->select('id')
             ->where('id_parent', $id_group)
             ->get();
