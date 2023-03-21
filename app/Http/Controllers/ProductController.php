@@ -13,15 +13,16 @@ class ProductController extends Controller
         $id_group = (\request('group')) ? \request('group') : 0;
 
         $groups = Groups::where('id_parent', 0)
-            ->with('products')
             ->with('children')
             ->get();
 
         $products = $groups_model->groupProducts($id_group);
-        $siblingsIds = $groups_model->siblingsIds($id_group);
+        $siblingsIds = $groups_model->siblingsIds($id_group); // Id соседних групп
+        $childrenIds = $groups_model->childrenIds($id_group); // Id дочерних групп
 
         return view('index', [
             'id_group' => $id_group,
+            'childrenIds' => $childrenIds,
             'siblingsIds' => $siblingsIds,
             'groups' => $groups,
             'products' => $products

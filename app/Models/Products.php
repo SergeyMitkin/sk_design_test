@@ -12,13 +12,4 @@ class Products extends Model
     public function group() {
         return $this->belongsTo(Groups::class, 'id_group');
     }
-
-    public static function getGroupProducts($id_group) {
-        // --- ОТЛАДКА НАЧАЛО
-        echo '<pre>';
-        var_dump(Groups::class);
-        echo'</pre>';
-        die;
-        // --- Отладка конец
-    }
 }

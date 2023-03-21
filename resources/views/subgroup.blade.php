@@ -7,7 +7,7 @@
             @if(
                 $subgroup->id == $id_group
                 || $subgroup->id_parent == $id_group
-                || array_search($id_group, $subgroup->childrenIds()) !== false
+                || array_search($id_group, $childrenIds) !== false
                 || array_search($subgroup->id, $siblingsIds) !== false
                 )
                 @include('subgroup', ['subgroup' => $subgroup])
